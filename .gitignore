@@ -1,0 +1,8 @@
+# this needs to be exist at the top directory of the repo for the docker-compose-apollo file but
+# we don't want to accidentally include it
+
+.DS_Store
+.idea
+__pycache__
+
+\.deploy/deploy\.iml
