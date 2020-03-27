@@ -29,13 +29,15 @@ public class PingService {
         JSONArray jsonArray = movieApiService.getMovies();
         Collection<PingResponse> pingResponses = new ArrayList<PingResponse>();
 
-        for (Object json: jsonArray) {
+        jsonArray.forEach(item->{
+            JSONObject json = (JSONObject) item;
             pingResponses.add(PingResponse.newBuilder()
-            .setTimestamp(request.getTimestamp())
-            .setCountry(json.getString("Country"))
-            .setCasesConfirmed(json.getInteger("TotalConfirmed")))
-            .build();
-        }
+                    .setTimestamp(request.getTimestamp())
+                    .setCountry(json.getString("Country"))
+                    .setTotalConfirmed(json.getInt("TotalConfirmed"))
+                    .build());
+            });
+
         return pingResponses;
     }
 }
