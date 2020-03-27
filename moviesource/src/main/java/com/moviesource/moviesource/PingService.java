@@ -1,11 +1,18 @@
 package com.moviesource.moviesource;
+
 import com.google.gson.Gson;
 import com.moviesource.moviesource.model.PingRequest;
 import com.moviesource.moviesource.model.PingResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 import com.moviesource.moviesource.MovieApiService;
+
+import java.util.ArrayList;
+import java.util.Collection;
+
 
 /**
  * Created by thinhda.
@@ -15,13 +22,20 @@ import com.moviesource.moviesource.MovieApiService;
 @Service
 @Slf4j
 public class PingService {
-    public PingResponse ping(PingRequest request) {
+    public Collection<PingResponse> ping(PingRequest request) {
         log.info("Received Ping message {}", new Gson().toJson(request));
 
         MovieApiService movieApiService = new MovieApiService();
-        return PingResponse.newBuilder()
-                .setTimestamp(request.getTimestamp())
-                .setMessage(movieApiService.getMovies().toString())
-                .build();
+        JSONArray jsonArray = movieApiService.getMovies();
+        Collection<PingResponse> pingResponses = new ArrayList<PingResponse>();
+
+        for (Object json: jsonArray) {
+            pingResponses.add(PingResponse.newBuilder()
+            .setTimestamp(request.getTimestamp())
+            .setCountry(json.getString("Country"))
+            .setCasesConfirmed(json.getInteger("TotalConfirmed")))
+            .build();
+        }
+        return pingResponses;
     }
 }

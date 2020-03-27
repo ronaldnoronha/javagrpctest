@@ -8,6 +8,9 @@ import com.moviesource.moviesource.model.PingRequest;
 import com.moviesource.moviesource.model.PingResponse;
 
 
+import java.util.Collection;
+
+
 @Slf4j
 @GRpcService
 public class GrpcController extends com.moviesource.moviesource.model.CoreServiceGrpc.CoreServiceImplBase {
@@ -16,7 +19,12 @@ public class GrpcController extends com.moviesource.moviesource.model.CoreServic
 
     @Override
     public void ping(PingRequest request, StreamObserver<PingResponse> responseObserver) {
-        responseObserver.onNext(pingService.ping(request));
+
+        Collection<PingResponse> responses = pingService.ping(request);
+        for (PingResponse response: responses) {
+            responseObserver.onNext(response);
+        }
+
         responseObserver.onCompleted();
     }
 }
