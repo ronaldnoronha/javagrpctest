@@ -1,5 +1,6 @@
 package com.moviesource.moviesource;
 
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -36,6 +37,11 @@ public class MovieApiService {
         {
             System.out.println(e.getMessage());
         }
+
+        jsonArray.forEach(item->{
+            JSONObject json = (JSONObject) item;
+            System.out.println(json.getString("Country"));
+                });
 
         return jsonArray;
     }
