@@ -18,5 +18,5 @@ message PingResponse {
 }
 
 service CoreService {
-    rpc Ping (PingRequest) returns (PingResponse);
+    rpc Ping (PingRequest) returns (stream PingResponse);
 }

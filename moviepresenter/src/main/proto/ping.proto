@@ -14,9 +14,10 @@ message PingRequest {
 
 message PingResponse {
     int64 timestamp = 1;
-    string message = 2;
+    string country = 2;
+    int64 totalConfirmed = 3;
 }
 
 service CoreService {
-    rpc Ping (PingRequest) returns (PingResponse);
+    rpc Ping (PingRequest) returns (stream PingResponse);
 }
