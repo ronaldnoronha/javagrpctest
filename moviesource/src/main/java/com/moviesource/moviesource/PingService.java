@@ -8,8 +8,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
-import com.moviesource.moviesource.MovieApiService;
-
 import java.util.ArrayList;
 import java.util.Collection;
 
